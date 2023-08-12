@@ -1,0 +1,317 @@
+{
+  "credentials": {
+    "host": "localhost",
+    "username": "postgres",
+    "password": "Welcome@2022",
+    "port": 5432,
+    "database": "insiit"
+  },
+  "tables": [
+    {
+      "name": "food_outlets",
+      "columns": {
+        "id": {
+          "type": "integer",
+          "auto_increment": true,
+          "primary_key": true,
+          "not_null": true
+        },
+        "name": {
+          "type": "varchar",
+          "not_null": true
+        },
+        "location": {
+          "type": "json",
+          "json_template": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "landmark": {
+          "type": "varchar"
+        },
+        "open_time": {
+          "type": "time"
+        },
+        "close_time": {
+          "type": "time"
+        },
+        "rating": {
+          "type": "json",
+          "json_template": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "real"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "menu": {
+          "type": "json",
+          "json_template": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "rating": {
+                  "type": "real"
+                },
+                "size": {
+                  "type": "string"
+                },
+                "cal": {
+                  "type": "integer"
+                },
+                "image": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "mess_food_items",
+      "columns": {
+        "id": {
+          "type": "integer",
+          "auto_increment": true,
+          "primary_key": true,
+          "not_null": true
+        },
+        "name": {
+          "type": "varchar",
+          "not_null": true
+        },
+        "description": {
+          "type": "varchar"
+        },
+        "rating": {
+          "type": "json",
+          "json_template": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "real"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "cal": {
+          "type": "integer"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "mess_menus",
+      "columns": {
+        "id": {
+          "type": "integer",
+          "auto_increment": true,
+          "primary_key": true,
+          "not_null": true
+        },
+        "month": {
+          "type": "smallint",
+          "not_null": true
+        },
+        "year": {
+          "type": "integer",
+          "not_null": true
+        },
+        "breakfast": {
+          "type": "json",
+          "json_template": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "foreign_key": true,
+              "references": {
+                "table": "mess_food_items",
+                "column": "id"
+              }
+            }
+          }
+        },
+        "lunch": {
+          "type": "json",
+          "json_template": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "foreign_key": true,
+              "references": {
+                "table": "mess_food_items",
+                "column": "id"
+              }
+            }
+          }
+        },
+        "snacks": {
+          "type": "json",
+          "json_template": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "foreign_key": true,
+              "references": {
+                "table": "mess_food_items",
+                "column": "id"
+              }
+            }
+          }
+        },
+        "dinner": {
+          "type": "json",
+          "json_template": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "foreign_key": true,
+              "references": {
+                "table": "mess_food_items",
+                "column": "id"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "messes",
+      "columns": {
+        "id": {
+          "type": "integer",
+          "auto_increment": true,
+          "primary_key": true,
+          "not_null": true
+        },
+        "name": {
+          "type": "varchar",
+          "not_null": true
+        },
+        "location": {
+          "type": "json",
+          "json_template": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "landmark": {
+          "type": "varchar"
+        },
+        "timings": {
+          "type": "object",
+          "properties": {
+            "breakfast": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "time"
+                },
+                "end": {
+                  "type": "time"
+                }
+              }
+            },
+            "lunch": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "time"
+                },
+                "end": {
+                  "type": "time"
+                }
+              }
+            },
+            "snacks": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "time"
+                },
+                "end": {
+                  "type": "time"
+                }
+              }
+            },
+            "dinner": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "time"
+                },
+                "end": {
+                  "type": "time"
+                }
+              }
+            }
+          }
+        },
+        "rating": {
+          "type": "json",
+          "json_template": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "real"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "menu": {
+          "type": "integer",
+          "foreign_key": true,
+          "references": {
+            "table": "mess_menus",
+            "column": "id"
+          }
+        }
+      },
+      "image": {
+        "type": "string"
+      }
+    }
+  ]
+}
