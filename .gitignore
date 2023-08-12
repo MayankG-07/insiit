@@ -1,37 +1,37 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-.vscode/
+insiit-ui/.vscode/
 
 # dependencies
-node_modules/
+insiit-ui/node_modules/
 
 # Expo
-.expo/
-dist/
-web-build/
+insiit-ui/.expo/
+insiit-ui/dist/
+insiit-ui/web-binsiit-uild/
 
 # Native
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
+insiit-insiit-ui/*.orig.*
+insiit-ui/*.jks
+insiit-ui/*.p8
+insiit-ui/*.p12
+insiit-ui/*.key
+insiit-ui/*.mobileprovision
 
 # Metro
-.metro-health-check*
+insiit-ui/.metro-health-check*
 
 # debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
+insiit-ui/npm-debug.*
+insiit-ui/yarn-debug.*
+insiit-ui/yarn-error.*
 
 # macOS
-.DS_Store
-*.pem
+insiit-ui/.DS_Store
+insiit-ui/*.pem
 
 # local env files
-.env*.local
+insiit-ui/.env*.local
 
 # typescript
-*.tsbuildinfo
+insiit-ui/*.tsbinsiit-uildinfo

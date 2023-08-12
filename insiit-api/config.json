@@ -1,0 +1,12 @@
+{
+  "port": 8000,
+  "api-keys": {
+    "test": "D4tuaQYa1m2pqpILHOND4KSauRFMvbaU"
+  },
+  "origins": {
+    "dev": {
+      "host": "http://localhost",
+      "port": 8081
+    }
+  }
+}
