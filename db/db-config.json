@@ -68,13 +68,24 @@
                   "type": "string"
                 },
                 "price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "description": {
                   "type": "string"
                 },
                 "rating": {
-                  "type": "real"
+                  "type": "json",
+                  "json_template": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "real"
+                      },
+                      "count": {
+                        "type": "integer"
+                      }
+                    }
+                  }
                 },
                 "size": {
                   "type": "string"
@@ -154,11 +165,22 @@
           "json_template": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "foreign_key": true,
-              "references": {
-                "table": "mess_food_items",
-                "column": "id"
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "integer"
+                },
+                "food": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "foreign_key": true,
+                    "references": {
+                      "table": "mess_food_items",
+                      "column": "id"
+                    }
+                  }
+                }
               }
             }
           }
@@ -168,11 +190,22 @@
           "json_template": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "foreign_key": true,
-              "references": {
-                "table": "mess_food_items",
-                "column": "id"
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "integer"
+                },
+                "food": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "foreign_key": true,
+                    "references": {
+                      "table": "mess_food_items",
+                      "column": "id"
+                    }
+                  }
+                }
               }
             }
           }
@@ -182,11 +215,22 @@
           "json_template": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "foreign_key": true,
-              "references": {
-                "table": "mess_food_items",
-                "column": "id"
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "integer"
+                },
+                "food": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "foreign_key": true,
+                    "references": {
+                      "table": "mess_food_items",
+                      "column": "id"
+                    }
+                  }
+                }
               }
             }
           }
@@ -196,11 +240,22 @@
           "json_template": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "foreign_key": true,
-              "references": {
-                "table": "mess_food_items",
-                "column": "id"
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "integer"
+                },
+                "food": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "foreign_key": true,
+                    "references": {
+                      "table": "mess_food_items",
+                      "column": "id"
+                    }
+                  }
+                }
               }
             }
           }

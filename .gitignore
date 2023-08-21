@@ -1,8 +1,10 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-.vscode/
 
-ui/.vscode/
+__pycache__/
+api/venv
+
+.vscode/
 
 # dependencies
 ui/node_modules/

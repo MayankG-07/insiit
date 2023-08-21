@@ -2,7 +2,7 @@
 CREATE TABLE food_outlets (
     id serial PRIMARY KEY,
     name VARCHAR NOT NULL,
-    location JSONB NOT NULL,
+    location JSONB,
     landmark VARCHAR,
     open_time TIME,
     close_time TIME,
@@ -68,8 +68,18 @@ BEGIN
                 RAISE EXCEPTION 'description of item in the menu array must be a string';
             END IF;
 
-            IF (menu_item ->> 'rating' IS NOT NULL) AND ((menu_item ->> 'rating')::NUMERIC IS NULL OR (menu_item ->> 'rating') < 0 OR (menu_item ->> 'rating') > 5) THEN
-                RAISE EXCEPTION 'rating of item in the menu array must be a floating number between 0 and 5';
+            IF (menu_item ->> 'rating' IS NOT NULL) THEN
+                IF (menu_item ->> 'rating')::JSONB IS NULL THEN
+                    RAISE EXCEPTION 'rating of item in the menu array must be an object';
+                END IF;
+
+                IF (menu_item ->> "rating" ->> "total")::NUMERIC IS NULL THEN
+                    RAISE EXCEPTION 'total rating of item in the menu array must be a number';
+                END IF;
+
+                IF (menu_item ->> "rating" ->> "count")::NUMERIC IS NULL THEN
+                    RAISE EXCEPTION 'count of ratings of item in the menu array must be a number';
+                END IF;
             END IF;
 
             IF (menu_item ->> 'size' IS NOT NULL) AND ((menu_item ->> 'size')::TEXT IS NULL) THEN
