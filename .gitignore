@@ -39,3 +39,48 @@ ui/.env*.local
 
 # typescript
 ui/*.tsbuildinfo
+
+# Miscellaneous
+ui/insiit/*.class
+ui/insiit/*.log
+ui/insiit/*.pyc
+ui/insiit/*.swp
+ui/insiit/.DS_Store
+ui/insiit/.atom/
+ui/insiit/.buildlog/
+ui/insiit/.history
+ui/insiit/.svn/
+ui/insiit/migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+ui/insiit**/doc/api/
+ui/insiit**/ios/Flutter/.last_build_id
+ui/insiit.dart_tool/
+ui/insiit.flutter-plugins
+ui/insiit.flutter-plugins-dependencies
+ui/insiit.packages
+ui/insiit.pub-cache/
+ui/insiit.pub/
+ui/insiit/build/
+
+# Symbolication related
+ui/insiit/app.*.symbols
+
+# Obfuscation related
+ui/insiit/app.*.map.json
+
+# Android Studio will place build artifacts here
+ui/insiit/android/app/debug
+ui/insiit/android/app/profile
+ui/insiit/android/app/release
