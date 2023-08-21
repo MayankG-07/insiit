@@ -1,10 +1,10 @@
 {
   "credentials": {
-    "host": "localhost",
-    "username": "postgres",
-    "password": "Welcome@2022",
+    "host": "bwisngvvfy7d9thi3ld2-postgresql.services.clever-cloud.com",
+    "username": "ueukz6syimv9zqujaxmi",
+    "password": "L9z5PBxeLPVw5pIauNxK3ebFYbmDll",
     "port": 5432,
-    "database": "insiit"
+    "database": "bwisngvvfy7d9thi3ld2"
   },
   "tables": [
     {
