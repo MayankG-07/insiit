@@ -6,7 +6,7 @@ After cloning the repository in your desired location, please follow the followi
   Run the following commands on your terminal:\
   `$ cd api && python -m venv venv`\
   `$ cd venv/Scripts && ./activate && cd ../../`\
-  `$ pip install -r requirements.txt`\
+  `$ pip install -r requirements.txt`
 
 - All the requirements for the API should now be installed.\
   To run the API on localhost, run the following commands in the project's **root** directory:\
@@ -26,4 +26,4 @@ After cloning the repository in your desired location, please follow the followi
 Please note that any time you pull new changes from the repository,
 please run the following commands in the project's root directory to update the requirements:\
 `$ cd api/venv/Scripts && ./activate && cd ../../`\
-`$ pip install -r requirements.txt`\
+`$ pip install -r requirements.txt`
