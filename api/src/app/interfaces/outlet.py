@@ -3,7 +3,8 @@ from app.interfaces.common import Location, Rating
 from appTypes.outletTypes import FoodOutletMenu, FoodOutletDetails, FoodOutletDBValues
 from datetime import time
 from fastapi import HTTPException, status
-from psycopg2 import connection
+import psycopg2
+import psycopg2.extensions
 import geopy.distance
 
 
@@ -30,7 +31,7 @@ class FoodOutlet:
         self.menu = menu
         self.image = image
 
-    async def sync_details(self, con: connection):
+    async def sync_details(self, con: psycopg2.extensions.connection):
         cursor = con.cursor()
 
         if self.id is not None:
@@ -47,13 +48,21 @@ class FoodOutlet:
         try:
             self.id = result[0]
             self.name = result[1]
-            self.location = Location(
-                latitude=result[2]["latitude"], longitude=result[2]["longitude"]
+            self.location = (
+                Location(
+                    latitude=result[2]["latitude"], longitude=result[2]["longitude"]
+                )
+                if result[2] is not None
+                else None
             )
             self.landmark = result[3]
             self.open_time = result[4]
             self.close_time = result[5]
-            self.rating = Rating(total=result[6]["total"], count=result[6]["count"])
+            self.rating = (
+                Rating(total=result[6]["total"], count=result[6]["count"])
+                if result[6] is not None
+                else None
+            )
             self.menu = result[7]
             self.image = result[8]
         except TypeError:
@@ -61,7 +70,7 @@ class FoodOutlet:
                 status_code=status.HTTP_404_NOT_FOUND, detail="Food outlet not found"
             )
 
-    async def create(self, con: connection) -> FoodOutletDetails:
+    async def create(self, con: psycopg2.extensions.connection) -> FoodOutletDetails:
         cursor = con.cursor()
 
         cursor.execute(
@@ -86,7 +95,7 @@ class FoodOutlet:
         self.sync_details(con)
         return self.__dict__
 
-    async def update(self, con: connection) -> FoodOutletDetails:
+    async def update(self, con: psycopg2.extensions.connection) -> FoodOutletDetails:
         cursor = con.cursor()
 
         cursor.execute(
@@ -108,7 +117,7 @@ class FoodOutlet:
         con.commit()
         return self.__dict__
 
-    async def remove(self, con: connection):
+    async def remove(self, con: psycopg2.extensions.connection):
         cursor = con.cursor()
 
         cursor.execute(f"DELETE FROM food_outlets WHERE id={self.id}")
@@ -116,7 +125,7 @@ class FoodOutlet:
 
 
 async def searchOutlets(
-    con: connection,
+    con: psycopg2.extensions.connection,
     nameFilter: Optional[str] = None,
     locationFilter: Optional[Location] = None,
     landmarkFilter: Optional[str] = None,

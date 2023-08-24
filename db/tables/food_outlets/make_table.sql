@@ -2,12 +2,12 @@
 CREATE TABLE food_outlets (
     id serial PRIMARY KEY,
     name VARCHAR NOT NULL,
-    location JSONB,
+    location JSON,
     landmark VARCHAR,
     open_time TIME,
     close_time TIME,
-    rating JSONB,   
-    menu JSONB,
+    rating JSON,   
+    menu JSON,
     image VARCHAR
 );
 
@@ -18,7 +18,7 @@ DECLARE
     menu_item JSON;
 BEGIN
     IF NEW.location IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.location) = 'object' THEN
+        IF NOT JSON_TYPEOF(NEW.location) = 'object' THEN
             RAISE EXCEPTION 'location must be an object';
         END IF;
 
@@ -32,7 +32,7 @@ BEGIN
     END IF;
 
     IF NEW.rating IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.rating) = 'object' THEN
+        IF NOT JSON_TYPEOF(NEW.rating) = 'object' THEN
             RAISE EXCEPTION 'rating must be an object';
         END IF;
 
@@ -46,13 +46,13 @@ BEGIN
     END IF;
 
     IF NEW.menu IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.menu) = 'array' THEN
+        IF NOT JSON_TYPEOF(NEW.menu) = 'array' THEN
             RAISE EXCEPTION 'menu must be an array';
         END IF;
 
         FOR menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.menu)
         LOOP
-            IF NOT JSONB_TYPEOF(menu_item) = 'object' THEN
+            IF NOT JSON_TYPEOF(menu_item) = 'object' THEN
                 RAISE EXCEPTION 'item in the menu array must be an object';
             END IF;
 
@@ -69,15 +69,15 @@ BEGIN
             END IF;
 
             IF (menu_item ->> 'rating' IS NOT NULL) THEN
-                IF (menu_item ->> 'rating')::JSONB IS NULL THEN
+                IF NOT JSON_TYPEOF(menu_item ->> 'rating') = 'object' THEN
                     RAISE EXCEPTION 'rating of item in the menu array must be an object';
                 END IF;
 
-                IF (menu_item ->> "rating" ->> "total")::NUMERIC IS NULL THEN
+                IF (menu_item ->> 'rating' ->> 'total')::NUMERIC IS NULL THEN
                     RAISE EXCEPTION 'total rating of item in the menu array must be a number';
                 END IF;
 
-                IF (menu_item ->> "rating" ->> "count")::NUMERIC IS NULL THEN
+                IF (menu_item ->> 'rating' ->> 'count')::NUMERIC IS NULL THEN
                     RAISE EXCEPTION 'count of ratings of item in the menu array must be a number';
                 END IF;
             END IF;
