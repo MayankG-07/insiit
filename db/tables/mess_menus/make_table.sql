@@ -13,31 +13,37 @@ CREATE TABLE mess_menus (
 CREATE FUNCTION validate_json_schemas_mess_menus()
 RETURNS TRIGGER AS $$
 DECLARE
-    menu_item JSONB;
-    food_item_id NUMERIC;
+    breakfast_menu_item JSON;
+    breakfast_food_item_id NUMERIC;
+    lunch_menu_item JSON;
+    lunch_food_item_id NUMERIC;
+    snacks_menu_item JSON;
+    snacks_food_item_id NUMERIC;
+    dinner_menu_item JSON;
+    dinner_food_item_id NUMERIC;
 BEGIN
     IF NEW.breakfast IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.breakfast) = 'array' THEN
+        IF NOT JSON_TYPEOF(NEW.breakfast) = 'array' THEN
             RAISE EXCEPTION 'breakfast must be an array';
         END IF;
 
-        FOR menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.breakfast)
+        FOR breakfast_menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.breakfast)
         LOOP
-            IF NOT JSONB_TYPEOF(menu_item) = 'object' THEN
+            IF NOT JSON_TYPEOF(breakfast_menu_item) = 'object' THEN
                 RAISE EXCEPTION 'item in the breakfast array must be an object';
             END IF;
 
-            IF (menu_item ->> 'day')::NUMERIC IS NULL THEN
+            IF (breakfast_menu_item ->> 'day')::NUMERIC IS NULL THEN
                 RAISE EXCEPTION 'day property of object in the breakfast array must be a number';
             END IF;
 
-            IF NOT JSONB_TYPEOF(menu_item ->> 'food') = 'array' THEN
+            IF NOT JSON_TYPEOF(breakfast_menu_item ->> 'food') = 'array' THEN
                 RAISE EXCEPTION 'food property of object in the breakfast array must be an array';
             END IF;
 
-            FOR food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(menu_item ->> 'food')
+            FOR breakfast_food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(breakfast_menu_item ->> 'food')
             LOOP
-                IF (food_item_id)::NUMERIC IS NULL THEN
+                IF (breakfast_food_item_id)::NUMERIC IS NULL THEN
                     RAISE EXCEPTION 'item in the food array must be a number';
                 END IF;
             END LOOP;
@@ -45,27 +51,27 @@ BEGIN
     END IF;
 
     IF NEW.lunch IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.lunch) = 'array' THEN
+        IF NOT JSON_TYPEOF(NEW.lunch) = 'array' THEN
             RAISE EXCEPTION 'lunch must be an array';
         END IF;
 
-        FOR menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.lunch)
+        FOR lunch_menu_time IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.lunch)
         LOOP
-            IF NOT JSONB_TYPEOF(menu_item) = 'object' THEN
+            IF NOT JSON_TYPEOF(lunch_menu_time) = 'object' THEN
                 RAISE EXCEPTION 'item in the lunch array must be an object';
             END IF;
 
-            IF (menu_item ->> 'day')::NUMERIC IS NULL THEN
+            IF (lunch_menu_time ->> 'day')::NUMERIC IS NULL THEN
                 RAISE EXCEPTION 'day property of object in the lunch array must be a number';
             END IF;
 
-            IF NOT JSONB_TYPEOF(menu_item ->> 'food') = 'array' THEN
+            IF NOT JSON_TYPEOF(lunch_menu_time ->> 'food') = 'array' THEN
                 RAISE EXCEPTION 'food property of object in the lunch array must be an array';
             END IF;
 
-            FOR food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(menu_item ->> 'food')
+            FOR lunch_food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(lunch_menu_time ->> 'food')
             LOOP
-                IF (food_item_id)::NUMERIC IS NULL THEN
+                IF (lunch_food_item_id)::NUMERIC IS NULL THEN
                     RAISE EXCEPTION 'item in the food array must be a number';
                 END IF;
             END LOOP;
@@ -73,27 +79,27 @@ BEGIN
     END IF;
 
     IF NEW.snacks IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.snacks) = 'array' THEN
+        IF NOT JSON_TYPEOF(NEW.snacks) = 'array' THEN
             RAISE EXCEPTION 'snacks must be an array';
         END IF;
 
-        FOR menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.snacks)
+        FOR snacks_menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.snacks)
         LOOP
-            IF NOT JSONB_TYPEOF(menu_item) = 'object' THEN
+            IF NOT JSON_TYPEOF(snacks_menu_item) = 'object' THEN
                 RAISE EXCEPTION 'item in the snacks array must be an object';
             END IF;
 
-            IF (menu_item ->> 'day')::NUMERIC IS NULL THEN
+            IF (snacks_menu_item ->> 'day')::NUMERIC IS NULL THEN
                 RAISE EXCEPTION 'day property of object in the snacks array must be a number';
             END IF;
 
-            IF NOT JSONB_TYPEOF(menu_item ->> 'food') = 'array' THEN
+            IF NOT JSON_TYPEOF(snacks_menu_item ->> 'food') = 'array' THEN
                 RAISE EXCEPTION 'food property of object in the snacks array must be an array';
             END IF;
 
-            FOR food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(menu_item ->> 'food')
+            FOR snacks_food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(snacks_menu_item ->> 'food')
             LOOP
-                IF (food_item_id)::NUMERIC IS NULL THEN
+                IF (snacks_food_item_id)::NUMERIC IS NULL THEN
                     RAISE EXCEPTION 'item in the food array must be a number';
                 END IF;
             END LOOP;
@@ -101,27 +107,27 @@ BEGIN
     END IF;
 
     IF NEW.dinner IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.dinner) = 'array' THEN
+        IF NOT JSON_TYPEOF(NEW.dinner) = 'array' THEN
             RAISE EXCEPTION 'dinner must be an array';
         END IF;
 
-        FOR menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.dinner)
+        FOR dinner_menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.dinner)
         LOOP
-            IF NOT JSONB_TYPEOF(menu_item) = 'object' THEN
+            IF NOT JSON_TYPEOF(dinner_menu_item) = 'object' THEN
                 RAISE EXCEPTION 'item in the dinner array must be an object';
             END IF;
 
-            IF (menu_item ->> 'day')::NUMERIC IS NULL THEN
+            IF (dinner_menu_item ->> 'day')::NUMERIC IS NULL THEN
                 RAISE EXCEPTION 'day property of object in the dinner array must be a number';
             END IF;
 
-            IF NOT JSONB_TYPEOF(menu_item ->> 'food') = 'array' THEN
+            IF NOT JSON_TYPEOF(dinner_menu_item ->> 'food') = 'array' THEN
                 RAISE EXCEPTION 'food property of object in the dinner array must be an array';
             END IF;
 
-            FOR food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(menu_item ->> 'food')
+            FOR dinner_food_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(dinner_menu_item ->> 'food')
             LOOP
-                IF (food_item_id)::NUMERIC IS NULL THEN
+                IF (dinner_food_item_id)::NUMERIC IS NULL THEN
                     RAISE EXCEPTION 'item in the food array must be a number';
                 END IF;
             END LOOP;

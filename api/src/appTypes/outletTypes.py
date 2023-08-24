@@ -15,7 +15,8 @@ class FoodOutletMenuItem(TypedDict):
     image: Optional[str]
 
 
-FoodOutletMenu = List[FoodOutletMenuItem]
+class FoodOutletMenu:
+    List[FoodOutletMenuItem]
 
 
 class FoodOutletDetails(TypedDict):
@@ -30,95 +31,132 @@ class FoodOutletDetails(TypedDict):
     image: Optional[str]
 
 
-class LocationDBValues(TypedDict):
+class LocationDetailsJSON(TypedDict):
     latitude: float
     longitude: float
 
 
-class RatingDBValues(TypedDict):
+class RatingDetailsJSON(TypedDict):
     total: float
     count: int
 
 
-FoodOutletDBValues: Tuple[
-    int,
-    str,
-    Optional[LocationDBValues],
-    Optional[str],
-    Optional[time],
-    Optional[time],
-    Optional[RatingDBValues],
-    Optional[FoodOutletMenu],
-    Optional[str],
-]
+class FoodOutletMenuItemJSON(TypedDict):
+    name: str
+    price: int
+    description: Optional[str]
+    rating: Optional[RatingDetailsJSON]
+    size: Optional[str]
+    cal: Optional[int]
+    image: Optional[str]
+
+
+class FoodOutletDetailsJSON(TypedDict):
+    id: int
+    name: str
+    location: Optional[LocationDetailsJSON]
+    landmark: Optional[str]
+    open_time: Optional[str]
+    close_time: Optional[str]
+    rating: Optional[RatingDetailsJSON]
+    menu: Optional[List[FoodOutletMenuItemJSON]]
+    image: Optional[str]
+
+
+class FoodOutletDBValues:
+    Tuple[
+        int,
+        str,
+        Optional[LocationDetailsJSON],
+        Optional[str],
+        Optional[time],
+        Optional[time],
+        Optional[RatingDetailsJSON],
+        Optional[FoodOutletMenu],
+        Optional[str],
+    ]
 
 
 class NewFoodOutletBodyParams(BaseModel):
     name: str
-    location: Optional[Location] = None
+    location: Optional[LocationDetailsJSON] = None
     landmark: Optional[str] = None
     open_time: Optional[time] = None
     close_time: Optional[time] = None
-    rating: Optional[Rating] = None
+    rating: Optional[RatingDetailsJSON] = None
     menu: Optional[FoodOutletMenu] = None
     image: Optional[str] = None
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 class UpdateFoodOutletBodyParams(BaseModel):
     name: Optional[str] = None
-    location: Optional[Location] = None
+    location: Optional[LocationDetailsJSON] = None
     landmark: Optional[str] = None
     open_time: Optional[time] = None
     close_time: Optional[time] = None
-    rating: Optional[Rating] = None
+    rating: Optional[RatingDetailsJSON] = None
     menu: Optional[FoodOutletMenu] = None
     image: Optional[str] = None
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 class FilterFoodOutletBodyParams(BaseModel):
     name: Optional[str] = None
-    location: Optional[Location] = None
+    location: Optional[LocationDetailsJSON] = None
     landmark: Optional[str] = None
     current_time: Optional[time] = None
     rating: Optional[int] = None
 
-
-class GetAllFoodOutletDetailsResponseModel(TypedDict):
-    outlets: List[FoodOutletDetails]
-
-
-class GetFoodOutletDetailsResponseModel(TypedDict):
-    outlet: FoodOutletDetails
+    class Config:
+        arbitrary_types_allowed = True
 
 
-class CreateFoodOutletResponseModel(TypedDict):
-    outlet: FoodOutletDetails
+class GetAllFoodOutletDetailsResponseModel(BaseModel):
+    outlets: List[FoodOutletDetailsJSON]
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
-class UpdateFoodOutletResponseModel(TypedDict):
-    outlet: FoodOutletDetails
+class GetFoodOutletDetailsResponseModel(BaseModel):
+    outlet: FoodOutletDetailsJSON
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
-class LocationDetails(TypedDict):
-    latitude: float
-    longitude: float
+class CreateFoodOutletResponseModel(BaseModel):
+    outlet: FoodOutletDetailsJSON
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
-class RatingDetails(TypedDict):
-    total: float
-    count: int
+class UpdateFoodOutletResponseModel(BaseModel):
+    outlet: FoodOutletDetailsJSON
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
-class FilterFoodOutletDetails(TypedDict):
+class FilterFoodOutletDetailsJSON(TypedDict):
     id: int
     name: str
-    location: Optional[LocationDetails]
+    location: Optional[LocationDetailsJSON]
     landmark: Optional[str]
     open_time: Optional[time]
     close_time: Optional[time]
-    rating: Optional[RatingDetails]
+    rating: Optional[RatingDetailsJSON]
     image: Optional[str]
 
 
-class FilterFoodOutletsResponseModel(TypedDict):
-    outlets: List[FilterFoodOutletDetails]
+class FilterFoodOutletsResponseModel(BaseModel):
+    outlets: List[FilterFoodOutletDetailsJSON]
+
+    class Config:
+        arbitrary_types_allowed = True
