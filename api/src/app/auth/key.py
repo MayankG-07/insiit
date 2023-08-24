@@ -7,6 +7,10 @@ api_keys = [value for _key, value in api_config["api-keys"].items()]
 
 
 async def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Missing headers: x-api-key"
+        )
     if api_key_header in api_keys:
         return api_key_header
     else:

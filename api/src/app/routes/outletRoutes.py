@@ -1,11 +1,6 @@
 from appTypes.outletTypes import (
     NewFoodOutletBodyParams,
     UpdateFoodOutletBodyParams,
-    GetAllFoodOutletDetailsResponseModel,
-    GetFoodOutletDetailsResponseModel,
-    CreateFoodOutletResponseModel,
-    UpdateFoodOutletResponseModel,
-    FilterFoodOutletsResponseModel,
     FilterFoodOutletBodyParams,
 )
 from app.app import app
@@ -20,7 +15,7 @@ from fastapi.security.api_key import APIKey
 @app.get("/food-outlet")
 async def get_all_food_outlet_details(
     api_key: APIKey = Depends(get_api_key),
-) -> GetAllFoodOutletDetailsResponseModel:
+):
     con = connect()
     cursor = con.cursor()
 
@@ -33,8 +28,12 @@ async def get_all_food_outlet_details(
         outlet = FoodOutlet(id=id)
         await outlet.sync_details(con)
         outlet_details = outlet.__dict__
-        outlet_details["location"] = outlet.location.__dict__
-        outlet_details["rating"] = outlet.rating.__dict__
+        outlet_details["location"] = (
+            outlet.location.__dict__ if outlet.location is not None else None
+        )
+        outlet_details["rating"] = (
+            outlet.rating.__dict__ if outlet.rating is not None else None
+        )
         details.append(outlet_details)
 
     disconnect(con)
@@ -42,17 +41,17 @@ async def get_all_food_outlet_details(
 
 
 @app.get("/food-outlet/{id}")
-async def get_food_outlet_details(
-    id: int, api_key: APIKey = Depends(get_api_key)
-) -> GetFoodOutletDetailsResponseModel:
+async def get_food_outlet_details(id: int, api_key: APIKey = Depends(get_api_key)):
     con = connect()
 
     outlet = FoodOutlet(id=id)
     await outlet.sync_details(con)
 
     details = outlet.__dict__
-    details["location"] = outlet.location.__dict__
-    details["rating"] = outlet.rating.__dict__
+    details["location"] = (
+        outlet.location.__dict__ if outlet.location is not None else None
+    )
+    details["rating"] = outlet.rating.__dict__ if outlet.rating is not None else None
 
     disconnect(con)
 
@@ -63,12 +62,12 @@ async def get_food_outlet_details(
 async def filter_food_outlets(
     params: FilterFoodOutletBodyParams,
     api_key: APIKey = Depends(get_api_key),
-) -> FilterFoodOutletsResponseModel:
+):
     con = connect()
     outlets = await searchOutlets(
         con=con,
         nameFilter=params.name,
-        locationFilter=params.location,
+        locationFilter=Location(**params.location),
         landmarkFilter=params.landmark,
         timeFilter=params.current_time,
         ratingFilter=params.rating,
@@ -85,7 +84,7 @@ async def filter_food_outlets(
 @app.post("/food-outlet", status_code=status.HTTP_201_CREATED)
 async def create_food_outlet(
     params: NewFoodOutletBodyParams, api_key: APIKey = Depends(get_api_key)
-) -> CreateFoodOutletResponseModel:
+):
     con = connect()
     params_dict = params.model_dump()
     if params_dict["location"] is not None:
@@ -113,7 +112,7 @@ async def create_food_outlet(
 @app.put("/food-outlet/{id}")
 async def update_food_outlet(
     id: int, params: UpdateFoodOutletBodyParams, api_key: APIKey = Depends(get_api_key)
-) -> UpdateFoodOutletResponseModel:
+):
     con = connect()
     outlet = FoodOutlet(id=id)
     await outlet.sync_details(con=con)

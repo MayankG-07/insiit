@@ -1,13 +1,13 @@
 import json
 import psycopg2
-from psycopg2 import connection
+import psycopg2.extensions
 
 with open(r"../../db/db-config.json", "r") as db_config_file:
     db_config = json.load(db_config_file)
     db_credentials = db_config["credentials"]
 
 
-def connect() -> connection:
+def connect() -> psycopg2.extensions.connection:
     con = psycopg2.connect(
         host=db_credentials["host"],
         port=db_credentials["port"],
@@ -19,5 +19,5 @@ def connect() -> connection:
     return con
 
 
-def disconnect(con: connection):
+def disconnect(con: psycopg2.extensions.connection):
     con.close()

@@ -15,11 +15,11 @@ CREATE FUNCTION validate_json_schemas_messes()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.timings IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.timings) = 'object' THEN
+        IF NOT JSONB_TYPEOF(NEW.timings AS JSONB) = 'object' THEN
             RAISE EXCEPTION 'timings must be an object';
         END IF;
 
-        IF NOT JSONB_TYPEOF(NEW.timings ->> 'breakfast') = 'object' THEN
+        IF NOT JSONB_TYPEOF(NEW.timings ->> 'breakfast' AS JSONB) = 'object' THEN
             RAISE EXCEPTION 'breakfast must be an object';
         END IF;
 
@@ -31,7 +31,7 @@ BEGIN
             RAISE EXCEPTION 'breakfast.end must be a time';
         END IF;
 
-        IF NOT JSONB_TYPEOF(NEW.timings ->> 'lunch') = 'object' THEN
+        IF NOT JSONB_TYPEOF(NEW.timings ->> 'lunch' AS JSONB) = 'object' THEN
             RAISE EXCEPTION 'lunch must be an object';
         END IF;
 
@@ -43,7 +43,7 @@ BEGIN
             RAISE EXCEPTION 'lunch.end must be a time';
         END IF;
 
-        IF NOT JSONB_TYPEOF(NEW.timings ->> 'snacks') = 'object' THEN
+        IF NOT JSONB_TYPEOF(NEW.timings ->> 'snacks' AS JSONB) = 'object' THEN
             RAISE EXCEPTION 'snacks must be an object';
         END IF;
 
@@ -55,7 +55,7 @@ BEGIN
             RAISE EXCEPTION 'snacks.end must be a time';
         END IF;
 
-        IF NOT JSONB_TYPEOF(NEW.timings ->> 'dinner') = 'object' THEN
+        IF NOT JSONB_TYPEOF(NEW.timings ->> 'dinner' AS JSONB) = 'object' THEN
             RAISE EXCEPTION 'dinner must be an object';
         END IF;
 
@@ -69,7 +69,7 @@ BEGIN
     END IF;
 
     IF NEW.rating IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.rating) = 'object' THEN
+        IF NOT JSONB_TYPEOF(NEW.rating AS JSONB) = 'object' THEN
             RAISE EXCEPTION 'rating must be an object';
         END IF;
 
