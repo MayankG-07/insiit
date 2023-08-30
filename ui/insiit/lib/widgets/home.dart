@@ -41,11 +41,60 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 10,
         ),
-        Container(),
+        GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 20,
+          children: [
+            Card(
+              color: const Color.fromARGB(255, 131, 97, 189),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const ListTile(
+                leading: Icon(Icons.directions_bus_filled),
+                title: Text("Bus Schedule"),
+              ),
+            ),
+            Card(
+              color: const Color.fromARGB(255, 226, 140, 78),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const ListTile(
+                leading: Icon(Icons.restaurant_menu),
+                title: Text("Outlets"),
+              ),
+            ),
+            Card(
+              color: const Color.fromARGB(255, 122, 194, 220),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const ListTile(
+                leading: Icon(Icons.mail_outline),
+                title: Text("Complaints"),
+              ),
+            ),
+            Card(
+              color: const Color.fromARGB(255, 249, 253, 139),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: const ListTile(
+                leading: Icon(Icons.search),
+                title: Text("Search InsIIT"),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(
           height: 10,
         ),
-        Container(),
+        Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: const ListTile(
+            leading: Icon(Icons.food_bank_outlined),
+            title: Text("What is in the Mess?"),
+            trailing: Icon(Icons.arrow_forward_ios),
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
