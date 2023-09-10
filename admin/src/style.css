@@ -1,0 +1,13 @@
+.navbar{
+    color: tomato;
+    padding: 5px;
+    background-color: beige;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  
+}
+
+.navbar a {
+    padding: 15px;
+}
