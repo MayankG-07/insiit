@@ -8,6 +8,60 @@
   },
   "tables": [
     {
+      "name": "food_outlet_menu_items",
+      "columns": {
+        "id": {
+          "type": "integer",
+          "auto_increment": true,
+          "primary_key": true,
+          "not_null": true
+        },
+        "name": {
+          "type": "varchar",
+          "not_null": true
+        },
+        "price": {
+          "type": "integer",
+          "not_null": true
+        },
+        "description": {
+          "type": "varchar"
+        },
+        "rating": {
+          "type": "json",
+          "json_template": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "real"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "size": {
+          "type": "varchar"
+        },
+        "cal": {
+          "type": "integer"
+        },
+        "image": {
+          "type": "varchar"
+        },
+        "food_outlet_id": {
+          "type": "integer",
+          "not_null": true,
+          "foreign_key": true,
+          "references": {
+            "table": "food_outlets",
+            "column": "id"
+          }
+        }
+      }
+    },
+    {
       "name": "food_outlets",
       "columns": {
         "id": {
@@ -62,40 +116,11 @@
           "json_template": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "integer"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "rating": {
-                  "type": "json",
-                  "json_template": {
-                    "type": "object",
-                    "properties": {
-                      "total": {
-                        "type": "real"
-                      },
-                      "count": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                },
-                "size": {
-                  "type": "string"
-                },
-                "cal": {
-                  "type": "integer"
-                },
-                "image": {
-                  "type": "string"
-                }
+              "type": "integer",
+              "foreign_key": true,
+              "references": {
+                "table": "food_outlet_menu_items",
+                "column": "id"
               }
             }
           }

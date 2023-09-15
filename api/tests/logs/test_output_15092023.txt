@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.11, pytest-7.4.0, pluggy-1.2.0
+rootdir: C:\DATA\Code\IITGN\InsIIT\insiit\api\tests
+plugins: anyio-3.7.1
+collected 43 items
+
+test_outlet.py ss......................................                  [ 93%]
+test_root.py ...                                                         [100%]
+
+================== 41 passed, 2 skipped in 125.78s (0:02:05) ==================
