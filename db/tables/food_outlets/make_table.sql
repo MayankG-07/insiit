@@ -1,6 +1,6 @@
 -- Creating table food_outlets
 CREATE TABLE food_outlets (
-    id serial PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
     location JSON,
     landmark VARCHAR,
@@ -15,7 +15,7 @@ CREATE TABLE food_outlets (
 CREATE FUNCTION validate_json_schemas_food_outlets()
 RETURNS TRIGGER AS $$
 DECLARE
-    menu_item JSON;
+    menu_item_id NUMERIC;
 BEGIN
     IF NEW.location IS NOT NULL THEN
         IF NOT JSON_TYPEOF(NEW.location) = 'object' THEN
@@ -50,48 +50,10 @@ BEGIN
             RAISE EXCEPTION 'menu must be an array';
         END IF;
 
-        FOR menu_item IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.menu)
+        FOR menu_item_id IN SELECT * FROM JSON_ARRAY_ELEMENTS(NEW.menu)
         LOOP
-            IF NOT JSON_TYPEOF(menu_item) = 'object' THEN
-                RAISE EXCEPTION 'item in the menu array must be an object';
-            END IF;
-
-            IF (menu_item ->> 'name' IS NULL) OR ((menu_item ->> 'name')::TEXT IS NULL) OR TRIM(menu_item ->> 'name') = '' THEN
-                RAISE EXCEPTION 'item in the menu array must have a name';
-            END IF;
-
-            IF (menu_item ->> 'price' IS NULL) OR (menu_item ->> 'price')::NUMERIC IS NULL THEN
-                RAISE EXCEPTION 'item in the menu array must have a price';
-            END IF;
-
-            IF (menu_item ->> 'description' IS NOT NULL) AND ((menu_item ->> 'description')::TEXT IS NULL) THEN
-                RAISE EXCEPTION 'description of item in the menu array must be a string';
-            END IF;
-
-            IF (menu_item ->> 'rating' IS NOT NULL) THEN
-                IF NOT JSON_TYPEOF(menu_item ->> 'rating') = 'object' THEN
-                    RAISE EXCEPTION 'rating of item in the menu array must be an object';
-                END IF;
-
-                IF (menu_item ->> 'rating' ->> 'total')::NUMERIC IS NULL THEN
-                    RAISE EXCEPTION 'total rating of item in the menu array must be a number';
-                END IF;
-
-                IF (menu_item ->> 'rating' ->> 'count')::NUMERIC IS NULL THEN
-                    RAISE EXCEPTION 'count of ratings of item in the menu array must be a number';
-                END IF;
-            END IF;
-
-            IF (menu_item ->> 'size' IS NOT NULL) AND ((menu_item ->> 'size')::TEXT IS NULL) THEN
-                RAISE EXCEPTION 'size of item in the menu array must be a string';
-            END IF;
-
-            IF (menu_item ->> 'cal' IS NOT NULL) AND ((menu_item ->> 'cal')::NUMERIC IS NULL) THEN
-                RAISE EXCEPTION 'calories of item in the menu array must be a number';
-            END IF;
-
-            IF (menu_item ->> 'image' IS NOT NULL) AND ((menu_item ->> 'image')::TEXT IS NULL) THEN
-                RAISE EXCEPTION 'url of image of item in the menu array must be a string';
+            IF menu_item_id::NUMERIC IS NULL THEN
+                RAISE EXCEPTION 'menu item id must be an integer';
             END IF;
         END LOOP;
     END IF;

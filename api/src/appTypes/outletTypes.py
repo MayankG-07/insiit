@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Any
 from typing_extensions import TypedDict
 from app.interfaces.common import Rating, Location
 from datetime import time
@@ -51,6 +51,29 @@ class FoodOutletMenuItemJSON(TypedDict):
     image: Optional[str]
 
 
+class AddMenuItemFoodOutletBodyParams(BaseModel):
+    name: str
+    price: int
+    description: Optional[str] = None
+    rating: Optional[dict[str, int | float]] = None
+    size: Optional[str] = None
+    cal: Optional[int] = None
+    image: Optional[str] = None
+
+
+class UpdateMenuItemFoodOutletBodyParams(BaseModel):
+    name: Optional[str] = None
+    price: Optional[int] = None
+    description: Optional[str] = None
+    rating: Optional[RatingDetailsJSON] = None
+    size: Optional[str] = None
+    cal: Optional[int] = None
+    image: Optional[str] = None
+
+    class Config:
+        arbitrary_types_allowed = True
+
+
 class FoodOutletDetailsJSON(TypedDict):
     id: int
     name: str
@@ -84,7 +107,6 @@ class NewFoodOutletBodyParams(BaseModel):
     open_time: Optional[time] = None
     close_time: Optional[time] = None
     rating: Optional[RatingDetailsJSON] = None
-    menu: Optional[FoodOutletMenu] = None
     image: Optional[str] = None
 
     class Config:
@@ -98,7 +120,6 @@ class UpdateFoodOutletBodyParams(BaseModel):
     open_time: Optional[time] = None
     close_time: Optional[time] = None
     rating: Optional[RatingDetailsJSON] = None
-    menu: Optional[FoodOutletMenu] = None
     image: Optional[str] = None
 
     class Config:
@@ -111,16 +132,16 @@ class FilterFoodOutletBodyParams(BaseModel):
     landmark: Optional[str] = None
     current_time: Optional[time] = None
     rating: Optional[int] = None
+    food_item: Optional[str] = None
 
     class Config:
         arbitrary_types_allowed = True
 
 
 class GetAllFoodOutletDetailsResponseModel(BaseModel):
-    outlets: List[FoodOutletDetailsJSON]
-
-    class Config:
-        arbitrary_types_allowed = True
+    outlets: List[
+        dict[str, int | str | time | dict[str, float] | dict[str, int | float]]
+    ]
 
 
 class GetFoodOutletDetailsResponseModel(BaseModel):
