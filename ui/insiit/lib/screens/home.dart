@@ -18,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -59,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color.fromARGB(255, 221, 213, 213),
+        backgroundColor: const Color.fromARGB(255, 251, 254, 1),
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;

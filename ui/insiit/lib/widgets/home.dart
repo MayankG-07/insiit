@@ -41,47 +41,54 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 10,
         ),
-        GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 20,
-          children: [
-            Card(
-              color: const Color.fromARGB(255, 131, 97, 189),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: const ListTile(
-                leading: Icon(Icons.directions_bus_filled),
-                title: Text("Bus Schedule"),
+        SizedBox(
+          height: 500,
+          width: double.infinity,
+          child: GridView.count(
+            crossAxisCount: 2,
+            children: [
+              Card(
+                color: const Color.fromARGB(255, 131, 97, 189),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const ListTile(
+                  leading: Icon(Icons.directions_bus_filled),
+                  title: Text("Bus Schedule"),
+                ),
               ),
-            ),
-            Card(
-              color: const Color.fromARGB(255, 226, 140, 78),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: const ListTile(
-                leading: Icon(Icons.restaurant_menu),
-                title: Text("Outlets"),
+              Card(
+                color: const Color.fromARGB(255, 226, 140, 78),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const ListTile(
+                  leading: Icon(Icons.restaurant_menu),
+                  title: Text("Outlets"),
+                ),
               ),
-            ),
-            Card(
-              color: const Color.fromARGB(255, 122, 194, 220),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: const ListTile(
-                leading: Icon(Icons.mail_outline),
-                title: Text("Complaints"),
+              Card(
+                color: const Color.fromARGB(255, 122, 194, 220),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const ListTile(
+                  leading: Icon(Icons.mail_outline),
+                  title: Text("Complaints"),
+                ),
               ),
-            ),
-            Card(
-              color: const Color.fromARGB(255, 249, 253, 139),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: const ListTile(
-                leading: Icon(Icons.search),
-                title: Text("Search InsIIT"),
+              Card(
+                color: const Color.fromARGB(255, 247, 179, 1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const ListTile(
+                  leading: Icon(Icons.search),
+                  title: Text("Search InsIIT"),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(
           height: 10,
