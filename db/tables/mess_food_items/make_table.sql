@@ -3,7 +3,7 @@ CREATE TABLE mess_food_items (
     id serial PRIMARY KEY,
     name VARCHAR NOT NULL,
     description VARCHAR,
-    rating JSONB,
+    rating JSON,
     cal INTEGER,
     image VARCHAR
 );
@@ -13,7 +13,7 @@ CREATE FUNCTION validate_json_schemas_mess_food_items()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.rating IS NOT NULL THEN
-        IF NOT JSONB_TYPEOF(NEW.rating) = 'object' THEN
+        IF NOT JSON_TYPEOF(NEW.rating AS JSON) = 'object' THEN
             RAISE EXCEPTION 'rating must be an object';
         END IF;
 
